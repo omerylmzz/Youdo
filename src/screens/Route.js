@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Splash from "./Splash";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import DrawerNavigation from "./DrawerNavigation";
 
 const Route = () => {
 
@@ -28,6 +29,12 @@ const Route = () => {
         options={{
           animation: "ios",
           headerShown: true
+        }}/>
+      <Stack.Screen
+        name="DrawerNavigation"
+        component={DrawerNavigation}
+        options={{
+          animation: "fade"
         }}/>
     </Stack.Navigator>
   )

@@ -4,7 +4,7 @@ import { lightColors } from "../styles/Colors";
 import { horizontalScale, moderateScale, verticalScale } from "../../helper/Metrics";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const PrimaryTextInput = ({mode, title, placeholder, right, icon}) => {
+const PrimaryTextInput = ({mode, title, placeholder, value, onChangeText, secureTextEntry, multiline, right, icon, iconPress}) => {
   return(
     <View>
       {
@@ -15,14 +15,18 @@ const PrimaryTextInput = ({mode, title, placeholder, right, icon}) => {
           :
           <></>
       }
-      <View style={[styles.container, {marginBottom: mode ? verticalScale(4) : verticalScale(16)}]}>
+      <View style={[styles.container, {maxHeight: verticalScale(100), marginBottom: mode ? verticalScale(4) : verticalScale(16)}]}>
         <TextInput
           style={styles.input}
           placeholder={placeholder}
-          placeholderTextColor={lightColors.placeholder}/>
+          placeholderTextColor={lightColors.placeholder}
+          value={value}
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
+          multiline={multiline}/>
         {
           right ?
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity onPress={iconPress} activeOpacity={0.5}>
               <Icon name={icon} color={lightColors.placeholder} size={moderateScale(24)}/>
             </TouchableOpacity>
             :
@@ -39,7 +43,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: horizontalScale(350),
-    height: verticalScale(50),
     backgroundColor: lightColors.input,
     borderRadius: moderateScale(5),
     paddingHorizontal: horizontalScale(12),
