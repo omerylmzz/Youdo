@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, View } from "react-native";
 import styles from "./styles";
 import PrimaryTextInput from "../../components/inputs/PrimaryTextInput";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 
 const SignIn = ({navigation}) => {
+
+  const [secureText, setSecureText] = useState(true);
+
   return(
     <View style={styles.container}>
       <Image
@@ -17,17 +20,19 @@ const SignIn = ({navigation}) => {
       <PrimaryTextInput
         mode={false}
         placeholder="Password"
+        secureTextEntry={secureText}
         right={true}
-        icon="eye-outline"/>
+        icon="eye-outline"
+        iconPress={() => setSecureText(item => !item)}/>
       <View style={styles.space}>
         <PrimaryButton
           mode={true}
-          text="Sign In"/>
+          text="Sign In"
+          onPress={() => navigation.navigate("DrawerNavigation")}/>
         <PrimaryButton
           mode={false}
           text="Sign Up"
-          onPress={() => navigation.navigate("SignUp")}
-        />
+          onPress={() => navigation.navigate("SignUp")}/>
       </View>
     </View>
   )

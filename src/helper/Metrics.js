@@ -10,6 +10,6 @@ const horizontalScale = (size) => (width / guidelineBaseWidth) * size;
 const verticalScale = (size) => (height / guidelineBaseHeight) * size;
 const moderateScale = (size) => size + (horizontalScale(size) - size) * factor;
 
-const defaultWidth = () => width;
+const defaultWidth = (size) => width * size;
 
 export { horizontalScale, verticalScale, moderateScale, defaultWidth};

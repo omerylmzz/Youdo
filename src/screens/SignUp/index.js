@@ -1,14 +1,16 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ScrollView, StatusBar, Text, View } from "react-native";
 import styles from "./styles";
 import LottieView from 'lottie-react-native';
 import { lightColors } from "../../components/styles/Colors";
 import PrimaryTextInput from "../../components/inputs/PrimaryTextInput";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
+import { verticalScale } from "../../helper/Metrics";
 
 const SignUp = ({navigation}) => {
 
   const animationRef = useRef(null);
+  const [secureText, setSecureText] = useState(true);
 
   useEffect(() => {
     setInterval(() => {
@@ -41,27 +43,25 @@ const SignUp = ({navigation}) => {
   return(
     <View style={styles.container}>
       <StatusBar backgroundColor={lightColors.primaryBlue} barStyle="light-content"/>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView style={{paddingVertical: verticalScale(12)}} showsVerticalScrollIndicator={false}>
         <PrimaryTextInput
-          mode={true}
-          title="Name"
+          mode={false}
           placeholder="Name"/>
         <PrimaryTextInput
-          mode={true}
-          title="Surname"
+          mode={false}
           placeholder="Surname"
         />
         <PrimaryTextInput
-          mode={true}
-          title="E-mail address"
+          mode={false}
           placeholder="E-mail address"
         />
         <PrimaryTextInput
-          mode={true}
-          title="Password"
+          mode={false}
           placeholder="Password"
+          secureTextEntry={secureText}
           right={true}
           icon="eye-outline"
+          iconPress={() => setSecureText(item => !item)}
         />
         <View style={styles.space}>
           <PrimaryButton
