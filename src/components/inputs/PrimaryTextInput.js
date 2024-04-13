@@ -4,7 +4,7 @@ import { lightColors } from "../styles/Colors";
 import { horizontalScale, moderateScale, verticalScale } from "../../helper/Metrics";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const PrimaryTextInput = ({mode, title, placeholder, value, onChangeText, secureTextEntry, multiline, right, icon, iconPress}) => {
+const PrimaryTextInput = ({mode, error, title, placeholder, value, onChangeText, onBlur, secureTextEntry, multiline, right, icon, iconPress}) => {
   return(
     <View>
       {
@@ -15,13 +15,14 @@ const PrimaryTextInput = ({mode, title, placeholder, value, onChangeText, secure
           :
           <></>
       }
-      <View style={[styles.container, {maxHeight: verticalScale(100), marginBottom: mode ? verticalScale(4) : verticalScale(16)}]}>
+      <View style={[styles.container, {maxHeight: verticalScale(100), borderColor: error ? lightColors.red : lightColors.secondary, marginBottom: mode ? verticalScale(4) : verticalScale(16)}]}>
         <TextInput
           style={styles.input}
           placeholder={placeholder}
           placeholderTextColor={lightColors.placeholder}
           value={value}
           onChangeText={onChangeText}
+          onBlur={onBlur}
           secureTextEntry={secureTextEntry}
           multiline={multiline}/>
         {
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     width: horizontalScale(350),
     backgroundColor: lightColors.input,
     borderRadius: moderateScale(5),
+    borderWidth: 1,
     paddingHorizontal: horizontalScale(12),
   },
   title:{

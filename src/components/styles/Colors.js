@@ -13,6 +13,7 @@ const lightColors = {
   input: "#EEEEEE",
   primaryBlue: "#5356FF",
   secondaryBlue: "#6C6FFF",
+  red: "#E72929",
   green: "#2ECC71",
 }
 

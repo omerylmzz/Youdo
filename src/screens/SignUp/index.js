@@ -6,11 +6,24 @@ import { lightColors } from "../../components/styles/Colors";
 import PrimaryTextInput from "../../components/inputs/PrimaryTextInput";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import { verticalScale } from "../../helper/Metrics";
+import { useForm, Controller } from "react-hook-form";
 
 const SignUp = ({navigation}) => {
 
   const animationRef = useRef(null);
   const [secureText, setSecureText] = useState(true);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }} = useForm({
+    defaultValues:{
+      name: "",
+      surname: "",
+      email: "",
+      password: ""
+    },
+  });
 
   useEffect(() => {
     setInterval(() => {
@@ -40,33 +53,87 @@ const SignUp = ({navigation}) => {
     })
   }, []);
 
+  const handleSignUp = (data) => {
+
+  }
+
   return(
     <View style={styles.container}>
       <StatusBar backgroundColor={lightColors.primaryBlue} barStyle="light-content"/>
       <ScrollView style={{paddingVertical: verticalScale(12)}} showsVerticalScrollIndicator={false}>
-        <PrimaryTextInput
-          mode={false}
-          placeholder="Name"/>
-        <PrimaryTextInput
-          mode={false}
-          placeholder="Surname"
-        />
-        <PrimaryTextInput
-          mode={false}
-          placeholder="E-mail address"
-        />
-        <PrimaryTextInput
-          mode={false}
-          placeholder="Password"
-          secureTextEntry={secureText}
-          right={true}
-          icon="eye-outline"
-          iconPress={() => setSecureText(item => !item)}
-        />
+        <Controller
+          control={control}
+          rules={{
+            required: true
+          }}
+          render={({field: {onChange, onBlur, value} }) => (
+            <PrimaryTextInput
+              mode={false}
+              placeholder="Name"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.name}
+            />
+          )}
+          name="name"/>
+        <Controller
+          control={control}
+          rules={{
+            required: true
+          }}
+          render={({field: {onChange, onBlur, value} }) => (
+            <PrimaryTextInput
+              mode={false}
+              placeholder="Surname"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.surname}
+            />
+          )}
+          name="surname"/>
+        <Controller
+          control={control}
+          rules={{
+            required: true
+          }}
+          render={({field: {onChange, onBlur, value} }) => (
+            <PrimaryTextInput
+              mode={false}
+              placeholder="E-mail address"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.email}
+            />
+          )}
+          name="email"/>
+        <Controller
+          control={control}
+          rules={{
+            required: true
+          }}
+          render={({field: {onChange, onBlur, value} }) => (
+            <PrimaryTextInput
+              mode={false}
+              placeholder="Password"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.password}
+              secureTextEntry={secureText}
+              right={true}
+              icon="eye-outline"
+              iconPress={() => setSecureText(item => !item)}
+            />
+          )}
+          name="password"/>
         <View style={styles.space}>
           <PrimaryButton
             mode={true}
             text="Sign Up"
+            onPress={handleSubmit(handleSignUp)}
           />
           <PrimaryButton
             mode={false}

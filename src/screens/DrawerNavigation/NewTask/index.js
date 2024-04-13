@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, ScrollView, Switch, Text, View } from "react-native";
+import { SafeAreaView, FlatList, ScrollView, Switch, Text, View } from "react-native";
 import styles from "./styles";
 import PrimaryHeader from "../../../components/headers/PrimaryHeader";
 import PrimaryTextInput from "../../../components/inputs/PrimaryTextInput";
@@ -7,25 +7,47 @@ import PrimaryPicker from "../../../components/buttons/PrimaryPicker";
 import { lightColors } from "../../../components/styles/Colors";
 import { horizontalScale, verticalScale } from "../../../helper/Metrics";
 import ColorCategoryItem from "../../../components/items/ColorCategoryItem";
-import ColorCategoryData from "../../../data/ColorCategoryData";
 import PrimaryButton from "../../../components/buttons/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { selectColor } from "../../../redux/slices/ColorCategorySlice";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const NewTask = ({navigation}) => {
 
   const [toggle, setToggle] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [modeDatePicker, setModeDatePicker] = useState("");
 
   const selector = useSelector((state) => state.colorCategory);
   const dispatch = useDispatch();
 
-  const aa = () => {
-    const day = new Date().getDate();
-    console.log(day)
+  const showPicker = (key) => {
+    if (key === "date") {
+      setModeDatePicker("date");
+      setDatePickerVisibility(true);
+    }
+    else {
+      setModeDatePicker("time");
+      setDatePickerVisibility(true);
+    }
   }
 
+  const hidePicker = () => {
+    setDatePickerVisibility(false);
+  }
+
+  const handlePicker = (time) => {
+
+    modeDatePicker === "date" ? setDate(time.toLocaleDateString()) : setTime(time.toLocaleTimeString());
+    hidePicker();
+
+  }
+
+
   return(
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <PrimaryHeader
         mode={false}
         title="New Task"
@@ -45,13 +67,17 @@ const NewTask = ({navigation}) => {
           <PrimaryPicker
             mode={true}
             title="Date"
+            placeholder={date}
             right={true}
-            icon="calendar-range"/>
+            icon="calendar-range"
+            onPress={() => showPicker("date")}/>
           <PrimaryPicker
             mode={true}
             title="Time"
+            placeholder={time}
             right={true}
-            icon="clock-outline"/>
+            icon="clock-outline"
+            onPress={() => showPicker("time")}/>
         </View>
         <View>
           <Text style={styles.title}>
@@ -83,16 +109,20 @@ const NewTask = ({navigation}) => {
               selected={item.selected}
               onPress={() => dispatch(selectColor(item))}/>
           )}/>
-
       </ScrollView>
       <View>
         <PrimaryButton
           mode={true}
           text="Create"
-          onPress={() => aa()}
-        />
+          onPress={() => setDatePickerVisibility(true)}/>
+        <DateTimePickerModal
+          mode={modeDatePicker}
+          is24Hour={true}
+          isVisible={isDatePickerVisible}
+          onConfirm={handlePicker}
+          onCancel={hidePicker}/>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

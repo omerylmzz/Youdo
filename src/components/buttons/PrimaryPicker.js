@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { horizontalScale, moderateScale, verticalScale } from "../../helper/Metrics";
 import { lightColors } from "../styles/Colors";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const PrimaryPicker = ({mode, title, placeholder, right, icon, iconPress}) => {
+const PrimaryPicker = ({mode, title, placeholder, right, icon, onPress}) => {
   return(
-    <View>
+    <Pressable onPress={onPress}>
       {
         mode ?
           <Text style={styles.title}>
@@ -21,14 +21,12 @@ const PrimaryPicker = ({mode, title, placeholder, right, icon, iconPress}) => {
         </Text>
         {
           right ?
-            <TouchableOpacity onPress={iconPress} activeOpacity={0.5}>
-              <Icon name={icon} color={lightColors.placeholder} size={moderateScale(24)}/>
-            </TouchableOpacity>
+            <Icon name={icon} color={lightColors.placeholder} size={moderateScale(24)}/>
             :
             <></>
         }
       </View>
-    </View>
+    </Pressable>
   )
 }
 const styles = StyleSheet.create({
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
   },
   placeholder:{
     fontSize: moderateScale(14),
-    color: lightColors.placeholder
+    color: lightColors.text
   }
 })
 
