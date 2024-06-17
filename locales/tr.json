@@ -1,0 +1,87 @@
+{
+  "title": {
+    "sign-up": "Hesap Oluştur",
+    "progress": {
+      "primary": "Merhaba",
+      "secondary": "Görevler",
+      "tertiary": "Tamamlandı"
+    },
+    "new-task": {
+      "title": "Başlık",
+      "task": "Görev",
+      "date": "Tarih",
+      "time": "Zaman",
+      "reminder": "Hatırlatıcı",
+      "color": "Renk"
+    },
+    "change-settings": {
+      "mail": {}
+    },
+    "all-tasks": "Görevler"
+  },
+  "description": {
+    "sign-up": "Lütfen bilgilerinizi doldurunuz",
+    "progress": {
+      "true": "İşte bugünkü görevleriniz",
+      "false": "Bugün için yapılacak bir göreviniz yok"
+    },
+    "new-task": "Bana hatırlat",
+    "all-tasks": "Silmek istediğinize emin misiniz?"
+  },
+  "text": {
+    "settings": {
+      "mail": "E-posta adresi",
+      "password": "Şifre",
+      "theme": "Tema",
+      "language": "Dil",
+      "notification": "Bildirim"
+    },
+    "change-settings": {
+      "theme": {
+        "light": "Aydınlık",
+        "dark": "Karanlık"
+      },
+      "language": {
+        "tr": "Türkçe",
+        "en": "İngilizce"
+      }
+    }
+  },
+  "placeholder": {
+    "name": "Ad",
+    "surname": "Soyad",
+    "mail": "E-posta adresi",
+    "password": "Şifre",
+    "current-password": "Şu anki şifre",
+    "new-password": "Yeni şifre",
+    "title": "Başlık yazınız...",
+    "task": "Yeni görev yazınız..."
+  },
+  "button": {
+    "sign-in": "Giriş Yap",
+    "sign-up": "Kayıt Ol",
+    "back": "Geri",
+    "create": "Oluştur",
+    "yes": "Evet",
+    "no": "Hayır"
+  },
+  "drawer": {
+    "progress": "İlerleme",
+    "new-task": "Yeni Görev",
+    "all-tasks": "Tüm Görevler",
+    "settings": "Ayarlar",
+    "sign-out": "Çıkış Yap"
+  },
+  "header": {
+    "new-task": "Yeni Görev",
+    "all-tasks": "Tüm Görevler",
+    "settings": "Ayarlar",
+    "change-settings": {
+      "personal": "Kişisel",
+      "mail": "E-posta Adresi",
+      "password": "Şifre",
+      "theme": "Tema",
+      "language": "Dil"
+    }
+  }
+}

@@ -1,32 +1,36 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { defaultWidth, horizontalScale, moderateScale, verticalScale } from "../../helper/Metrics";
-import { lightColors } from "../styles/Colors";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Animated, { FadeIn } from "react-native-reanimated";
+import { useTheme } from "@react-navigation/native";
 
-const TaskItem = ({label, title, task, time}) => {
+const TaskItem = ({title, task, time, label, deletable, completed, onPress, index}) => {
+
+  const { colors } = useTheme();
+
   return(
-    <View style={styles.container}>
-      <View style={[styles.label, {backgroundColor: label}]}/>
-      <View style={styles.layout}>
+    <Animated.View entering={FadeIn.delay(200 * index)} style={styles.container}>
+      <View style={[styles.label, {backgroundColor: completed ? colors.placeholder : label}]}/>
+      <View style={[styles.layout, {backgroundColor: colors.background, borderColor: colors.secondary}]}>
         <View style={styles.row}>
-          <Text style={styles.title}>
+          <Text style={[styles.title, {color: colors.title}]} numberOfLines={1}>
             {title}
           </Text>
-          <Text style={styles.description}>
+          <Text style={[styles.description, {color: colors.description}]}>
             {time}
           </Text>
         </View>
         <View style={[styles.row, {paddingVertical: verticalScale(4)}]}>
-          <Text style={styles.text}>
+          <Text style={[styles.text, {color: colors.text, textDecorationLine: completed ? "line-through" : "none"}]}>
             {task}
           </Text>
-          <TouchableOpacity activeOpacity={0.5}>
-            <Icon name="radiobox-blank" color={lightColors.green} size={moderateScale(16)}/>
+          <TouchableOpacity onPress={onPress} activeOpacity={0.5}>
+            <Icon name={deletable ? "trash-can-outline" : completed ? "check-circle" : "radiobox-blank"} color={deletable ? colors.red : colors.green} size={moderateScale(16)}/>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Animated.View>
   )
 }
 
@@ -39,14 +43,13 @@ const styles = StyleSheet.create({
     marginVertical: verticalScale(4)
   },
   label:{
-    width: horizontalScale(12)
+    width: horizontalScale(10)
   },
   layout:{
     flex: 1,
     borderTopWidth: 1,
     borderRightWidth: 1,
-    borderLeftWidth: 1,
-    borderColor: lightColors.secondary,
+    borderBottomWidth: 1,
     padding: moderateScale(8)
   },
   row:{
@@ -56,17 +59,14 @@ const styles = StyleSheet.create({
   },
   title:{
     fontWeight: "bold",
-    fontSize: moderateScale(14),
-    color: lightColors.title
+    fontSize: moderateScale(14)
   },
   text:{
     fontSize: moderateScale(12),
-    color: lightColors.text,
     maxWidth: defaultWidth(0.8)
   },
   description:{
-    fontSize: moderateScale(10),
-    color: lightColors.description
+    fontSize: moderateScale(10)
   }
 })
 

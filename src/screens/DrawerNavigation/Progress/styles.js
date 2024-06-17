@@ -1,11 +1,9 @@
 import { StyleSheet } from "react-native";
-import { lightColors } from "../../../components/styles/Colors";
-import { defaultWidth, horizontalScale, moderateScale, verticalScale } from "../../../helper/Metrics";
+import { horizontalScale, moderateScale, verticalScale } from "../../../helper/Metrics";
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1,
-    backgroundColor: lightColors.background
+    flex: 1
   },
   contentContainer:{
     paddingHorizontal: horizontalScale(8)
@@ -13,16 +11,14 @@ const styles = StyleSheet.create({
   title:{
     fontWeight: "bold",
     fontSize: moderateScale(32),
-    color: lightColors.title
   },
   description:{
-    fontSize: moderateScale(16),
-    color: lightColors.text
+    fontSize: moderateScale(16)
   },
   section:{
     fontWeight: "bold",
     fontSize: moderateScale(16),
-    color: lightColors.title
+    paddingVertical: verticalScale(12)
   }
 })
 

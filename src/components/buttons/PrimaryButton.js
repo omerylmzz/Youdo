@@ -1,12 +1,16 @@
-import React from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
-import { lightColors } from "../styles/Colors";
+import React, { useContext } from "react";
+import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
 import { horizontalScale, moderateScale, verticalScale } from "../../helper/Metrics";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { useTheme } from "@react-navigation/native";
+import { ThemeContext } from "../../theme/ThemeContext";
 
-const PrimaryButton = ({mode, text, loading, onPress}) => {
+const PrimaryButton = ({mode, text, loading, disable, onPress}) => {
 
   const scaleOffset = useSharedValue(1);
+
+  const { isDarkTheme } = useContext(ThemeContext);
+  const { colors } = useTheme();
 
   const pressIn = () => scaleOffset.value = 0.96;
 
@@ -20,12 +24,12 @@ const PrimaryButton = ({mode, text, loading, onPress}) => {
 
   return(
     <Animated.View style={[animatedStyles]}>
-      <Pressable style={[styles.container, {backgroundColor: mode ? lightColors.primaryBlue : lightColors.background, borderWidth: mode ? 0 : 1}]} onPress={onPress} onPressIn={pressIn} onPressOut={pressOut}>
+      <Pressable style={[styles.container, {backgroundColor: mode ? colors.primaryBlue : colors.white, borderWidth: mode ? 0 : isDarkTheme ? 0 : 1, borderColor: colors.primaryBlue}]} disabled={disable} onPress={onPress} onPressIn={pressIn} onPressOut={pressOut}>
         {
           loading ?
-            <ActivityIndicator size="small" color={mode ? lightColors.white : lightColors.primaryBlue} animating={loading}/>
+            <ActivityIndicator size="small" color={mode ? colors.white : colors.primaryBlue} animating={loading}/>
             :
-            <Text style={[styles.text, {color: mode ? lightColors.white : lightColors.primaryBlue}]}>
+            <Text style={[styles.text, {color: mode ? colors.white : colors.primaryBlue}]}>
               {text}
             </Text>
         }
@@ -36,19 +40,16 @@ const PrimaryButton = ({mode, text, loading, onPress}) => {
 
 const styles = StyleSheet.create({
   container:{
-    backgroundColor: lightColors.primaryBlue,
     width: horizontalScale(350),
     height: verticalScale(50),
     justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScale(5),
-    borderColor: lightColors.primaryBlue,
     marginBottom: verticalScale(16)
   },
   text:{
     fontWeight: "bold",
-    fontSize: moderateScale(18),
-    color: lightColors.white
+    fontSize: moderateScale(18)
   }
 })
 

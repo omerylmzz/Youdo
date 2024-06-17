@@ -1,13 +1,11 @@
 import { StyleSheet } from "react-native";
-import { lightColors } from "../../components/styles/Colors";
 import { horizontalScale } from "../../helper/Metrics";
 
 const styles = StyleSheet.create({
   container:{
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: lightColors.primaryBlue
+    alignItems: "center"
   },
   image:{
     width: horizontalScale(200),

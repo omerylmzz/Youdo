@@ -2,17 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 import ColorCategoryData from "../../data/ColorCategoryData";
 
 const ColorCategorySlice = createSlice({
-  name:"colorCategory",
+  name: "colorCategory",
   initialState:{
-    array: ColorCategoryData,
-    selectedId: 0
+    data: ColorCategoryData,
+    selectedId: 0,
+    selectedColor: "#E72929"
   },
   reducers:{
     selectColor(state, action) {
-      const selectedItem = state.array.filter((item) => item.selected === true).map(i => i.id);
-      state.array[selectedItem].selected = false;
-      state.array[action.payload.id].selected = true;
+      state.data[state.selectedId].selected = false;
+      state.data[action.payload.id].selected = true;
       state.selectedId = action.payload.id;
+      state.selectedColor = action.payload.color;
     }
   },
 });

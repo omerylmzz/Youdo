@@ -1,0 +1,87 @@
+{
+  "title": {
+    "sign-up": "Create Account",
+    "progress": {
+      "primary": "Hey",
+      "secondary": "Tasks",
+      "tertiary": "Completed"
+    },
+    "new-task": {
+      "title": "Title",
+      "task": "Task",
+      "date": "Date",
+      "time": "Time",
+      "reminder": "Reminder",
+      "color": "Color"
+    },
+    "change-settings": {
+      "mail": {}
+    },
+    "all-tasks": "Tasks"
+  },
+  "description": {
+    "sign-up": "Please enter your details",
+    "progress": {
+      "true": "Here are your tasks today",
+      "false": "You have no tasks today"
+    },
+    "new-task": "Remind me",
+    "all-tasks": "Are you sure you want to delete?"
+  },
+  "text": {
+    "settings": {
+      "mail": "E-mail address",
+      "password": "Password",
+      "theme": "Theme",
+      "language": "Language",
+      "notification": "Notification"
+    },
+    "change-settings": {
+      "theme": {
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "language": {
+        "tr": "Turkish",
+        "en": "English"
+      }
+    }
+  },
+  "placeholder": {
+    "name": "Name",
+    "surname": "Surname",
+    "mail": "E-mail address",
+    "password": "Password",
+    "current-password": "Current password",
+    "new-password": "New password",
+    "title": "Write title...",
+    "task": "Write new task..."
+  },
+  "button": {
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "back": "Back",
+    "create": "Create",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "drawer": {
+    "progress": "Progress",
+    "new-task": "New Task",
+    "all-tasks": "All Tasks",
+    "settings": "Settings",
+    "sign-out": "Sign Out"
+  },
+  "header": {
+    "new-task": "New Task",
+    "all-tasks": "All Tasks",
+    "settings": "Settings",
+    "change-settings": {
+      "personal": "Personal",
+      "mail": "E-mail Address",
+      "password": "Password",
+      "theme": "Theme",
+      "language": "Language"
+    }
+  }
+}
