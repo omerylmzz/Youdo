@@ -14,10 +14,11 @@
       "reminder": "Reminder",
       "color": "Color"
     },
+    "all-tasks": "Tasks",
     "change-settings": {
-      "mail": {}
-    },
-    "all-tasks": "Tasks"
+      "mail": "Change your e-mail address",
+      "password": "Change your password"
+    }
   },
   "description": {
     "sign-up": "Please enter your details",
@@ -26,7 +27,11 @@
       "false": "You have no tasks today"
     },
     "new-task": "Remind me",
-    "all-tasks": "Are you sure you want to delete?"
+    "all-tasks": "Are you sure you want to delete?",
+    "change-settings": {
+      "mail": "Enter your new e-mail address",
+      "password": "Enter your current password and new password"
+    }
   },
   "text": {
     "settings": {

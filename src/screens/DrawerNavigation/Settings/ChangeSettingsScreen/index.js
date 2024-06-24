@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import PrimaryHeader from "../../../../components/headers/PrimaryHeader";
 import styles from "./styles";
@@ -10,24 +10,38 @@ import { useTheme } from "@react-navigation/native";
 import { ThemeContext } from "../../../../theme/ThemeContext";
 import PrimaryTextInput from "../../../../components/inputs/PrimaryTextInput";
 import { Controller, useForm } from "react-hook-form";
+import AlertNotification from "../../../../components/layouts/AlertNotification";
+import { verticalScale } from "../../../../helper/Metrics";
+import client from "../../../../api/client";
+import serverErrorsData from "../../../../data/ServerErrorsData";
 
 const ChangeSettingsScreen = ({navigation, route}) => {
 
-  const { TYPE } = route.params;
+  const { TYPE, MAIL } = route.params;
   const { t } = useTranslation();
   const [themes, setThemes] = useState([]);
   const [languages, setLanguages] = useState([]);
+
   const { setIsDarkTheme } = useContext(ThemeContext);
   const { colors } = useTheme();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [secureCurrentPassword, setSecureCurrentPassword] = useState(true);
   const [secureNewPassword, setSecureNewPassword] = useState(true);
+
+  const alertNotificationRef = useRef(null);
+  const [alertNotification, setAlertNotification] = useState({
+    type: "",
+    text: ""
+  });
 
   const {
     control,
     handleSubmit,
     formState: { errors }} = useForm({
     defaultValues:{
+      newMail: MAIL,
       currentPassword: "",
       newPassword: ""
     },
@@ -47,6 +61,7 @@ const ChangeSettingsScreen = ({navigation, route}) => {
       header: () => (
         <PrimaryHeader
           mode={true}
+          loading={isLoading}
           title={HeaderData[Index].label}
           leftIcon="arrow-left"
           leftPress={() => navigation.goBack()}
@@ -54,7 +69,7 @@ const ChangeSettingsScreen = ({navigation, route}) => {
           rightPress={handleSubmit(saveChanges)}/>
       )
     })
-  }, []);
+  }, [isLoading]);
 
   const HeaderData = [
     {
@@ -93,10 +108,96 @@ const ChangeSettingsScreen = ({navigation, route}) => {
 
   }
 
-  const saveChanges = async (data) => {
+  const saveChanges = useCallback (async (data) => {
 
-    if (TYPE === "password"){
-      console.log(data)
+    if (TYPE === "mail"){
+      setIsLoading(true);
+      setTimeout(async () => {
+        try {
+          const ACCESS_TOKEN = await AsyncStorage.getItem("ACCESS_TOKEN");
+          const LANGUAGE = await AsyncStorage.getItem("LANGUAGE");
+
+          const headers = {
+            "Content-Type": "application/json",
+            "X-Auth-User-Token": ACCESS_TOKEN
+          }
+
+          const body = {
+            MAIL: data.newMail
+          }
+
+          const response = await client.post("/user/change/mail", body, { headers });
+
+          if (response.data.SUCCESSFUL){
+            setIsLoading(false);
+            const user = JSON.parse(await AsyncStorage.getItem("USER_DATA"));
+            const theme = await AsyncStorage.getItem("THEME");
+            const language = await AsyncStorage.getItem("LANGUAGE");
+            const notification = await AsyncStorage.getItem("NOTIFICATION");
+            const object = {
+              NAME: user.NAME,
+              SURNAME: user.SURNAME,
+              MAIL: data.newMail,
+              PASSWORD: user.PASSWORD,
+              THEME: theme,
+              LANGUAGE: language,
+              NOTIFICATION: notification === "Open"
+            }
+            await AsyncStorage.setItem("USER_DATA", JSON.stringify(object));
+            navigation.goBack();
+          }
+          else {
+            setIsLoading(false);
+            const Index = serverErrorsData.findIndex((item) => item.message === response.data.MESSAGE);
+            setAlertNotification({type: "error", text: LANGUAGE === "English" ? serverErrorsData[Index].en : serverErrorsData[Index].tr});
+            alertNotificationRef?.current?.showAlertNotification();
+          }
+        }
+        catch (error){
+          setIsLoading(false);
+          console.log("CHANGE MAIL ERROR: " + error);
+          setAlertNotification({type: "error", text: "Something went wrong"});
+          alertNotificationRef?.current?.showAlertNotification();
+        }
+      }, 2000);
+    }
+    else if (TYPE === "password"){
+      setIsLoading(true);
+      setTimeout(async () => {
+        try {
+          const ACCESS_TOKEN = await AsyncStorage.getItem("ACCESS_TOKEN");
+          const LANGUAGE = await AsyncStorage.getItem("LANGUAGE");
+
+          const headers = {
+            "Content-Type": "application/json",
+            "X-Auth-User-Token": ACCESS_TOKEN
+          }
+
+          const body = {
+            CURRENT_PASSWORD: data.currentPassword,
+            NEW_PASSWORD: data.newPassword
+          }
+
+          const response = await client.post("/user/change/password", body, {  headers });
+
+          if (response.data.SUCCESSFUL){
+            setIsLoading(false);
+            navigation.goBack();
+          }
+          else {
+            setIsLoading(false);
+            const Index = serverErrorsData.findIndex((item) => item.message === response.data.MESSAGE);
+            setAlertNotification({type: "error", text: LANGUAGE === "English" ? serverErrorsData[Index].en : serverErrorsData[Index].tr});
+            alertNotificationRef?.current?.showAlertNotification();
+          }
+        }
+        catch (error){
+          setIsLoading(false);
+          console.log("CHANGE PASSWORD ERROR: " + error);
+          setAlertNotification({type: "error", text: "Something went wrong"});
+          alertNotificationRef?.current?.showAlertNotification();
+        }
+      }, 2000);
     }
     else if (TYPE === "theme"){
       const deviceTheme = await AsyncStorage.getItem("THEME");
@@ -108,7 +209,7 @@ const ChangeSettingsScreen = ({navigation, route}) => {
       deviceLanguage === "Turkish" ? i18next.changeLanguage("tr") : i18next.changeLanguage("en");
       navigation.goBack();
     }
-  }
+  })
 
   const getData = async () => {
     if (TYPE === "theme"){
@@ -157,15 +258,43 @@ const ChangeSettingsScreen = ({navigation, route}) => {
     <View style={[styles.container, {backgroundColor: colors.background}]}>
       {
         TYPE === "mail" && (
-          <View></View>
+          <View style={{paddingVertical: verticalScale(12)}}>
+            <View style={styles.body}>
+              <Text style={[styles.title, {color: colors.title}]}>
+                {t("title.change-settings.mail")}
+              </Text>
+              <Text style={[styles.description, {color: colors.description}]}>
+                {t("description.change-settings.mail")}
+              </Text>
+            </View>
+            <Controller
+              control={control}
+              rules={{
+                required: true
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <PrimaryTextInput
+                  mode={false}
+                  placeholder={t("placeholder.mail")}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.newMail}
+                />
+              )}
+              name="newMail"/>
+          </View>
         )
       }
       {
         TYPE === "password" && (
-          <View>
+          <View style={{paddingVertical: verticalScale(12)}}>
             <View style={styles.body}>
               <Text style={[styles.title, {color: colors.title}]}>
-                Change your password
+                {t("title.change-settings.password")}
+              </Text>
+              <Text style={[styles.description, {color: colors.description}]}>
+                {t("description.change-settings.password")}
               </Text>
             </View>
             <Controller
@@ -243,6 +372,10 @@ const ChangeSettingsScreen = ({navigation, route}) => {
           </View>
         )
       }
+      <AlertNotification
+        ref={alertNotificationRef}
+        type={alertNotification.type}
+        text={alertNotification.text}/>
     </View>
   )
 }

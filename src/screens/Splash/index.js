@@ -20,8 +20,10 @@ const Splash = ({navigation}) => {
     try {
       const LANGUAGE = await AsyncStorage.getItem("LANGUAGE");
       const THEME = await AsyncStorage.getItem("THEME");
+      const NOTIFICATION = await AsyncStorage.getItem("NOTIFICATION");
       LANGUAGE === null ? await AsyncStorage.setItem("LANGUAGE", "English") : LANGUAGE === "English" ? i18next.changeLanguage("en") : i18next.changeLanguage("tr");
       THEME === null ? await AsyncStorage.setItem("THEME", "Light") : THEME === "Light" ? setIsDarkTheme(false) : setIsDarkTheme(true);
+      NOTIFICATION === null && await AsyncStorage.setItem("NOTIFICATION", "Open");
     }
     catch (error){
       console.log("SPLASH SCREEN DEVICE SETTINGS ERROR: " + error);

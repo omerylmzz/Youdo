@@ -35,6 +35,7 @@ const SettingsScreen = ({navigation}) => {
       const object = JSON.parse(await AsyncStorage.getItem("USER_DATA"));
       const theme = await AsyncStorage.getItem("THEME");
       const language = await AsyncStorage.getItem("LANGUAGE");
+      const notification = await AsyncStorage.getItem("NOTIFICATION");
       const data = {
         NAME: object.NAME,
         SURNAME: object.SURNAME,
@@ -42,12 +43,26 @@ const SettingsScreen = ({navigation}) => {
         PASSWORD: object.PASSWORD,
         THEME: theme,
         LANGUAGE: language,
-        NOTIFICATION: object.NOTIFICATION
+        NOTIFICATION: notification === "Open"
       }
       setUserData(data);
     }
     catch (error){
       console.log(error);
+    }
+  }
+
+  const changeNotificationSetting = async () => {
+    try {
+      const NOTIFICATION = await AsyncStorage.getItem("NOTIFICATION");
+
+      NOTIFICATION === "Open" ?
+        await AsyncStorage.setItem("NOTIFICATION", "Close")
+        :
+        await AsyncStorage.setItem("NOTIFICATION", "Open")
+    }
+    catch (error){
+      console.log("CHANGE NOTIFICATION ERROR: ", + error);
     }
   }
 
@@ -123,8 +138,9 @@ const SettingsScreen = ({navigation}) => {
                   link={link}
                   value={value}
                   type={type}
-                  onPress={() => navigation.navigate("ChangeSettingsScreen", {
-                    TYPE: id
+                  onPress={() => id === "notification" ? changeNotificationSetting() : navigation.navigate("ChangeSettingsScreen", {
+                    TYPE: id,
+                    MAIL: userData.MAIL
                   })}
                 />
               ))

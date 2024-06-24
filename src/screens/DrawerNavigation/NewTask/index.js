@@ -171,7 +171,7 @@ const NewTask = ({navigation}) => {
               {t("description.new-task")}
             </Text>
             <Switch
-              trackColor={{true: colors.green, false: colors.secondary}}
+              trackColor={{true: colors.green, false: colors.placeholder}}
               thumbColor={colors.white}
               onValueChange={() => setReminder(item => !item)}
               value={reminder} />

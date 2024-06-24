@@ -14,10 +14,11 @@
       "reminder": "Hatırlatıcı",
       "color": "Renk"
     },
+    "all-tasks": "Görevler",
     "change-settings": {
-      "mail": {}
-    },
-    "all-tasks": "Görevler"
+      "mail": "E-posta adresinizi değiştirin",
+      "password": "Şifrenizi değiştirin"
+    }
   },
   "description": {
     "sign-up": "Lütfen bilgilerinizi doldurunuz",
@@ -26,7 +27,11 @@
       "false": "Bugün için yapılacak bir göreviniz yok"
     },
     "new-task": "Bana hatırlat",
-    "all-tasks": "Silmek istediğinize emin misiniz?"
+    "all-tasks": "Silmek istediğinize emin misiniz?",
+    "change-settings": {
+      "mail": "Yeni e-posta adresinizi giriniz",
+      "password": "Şu anki şifrenizi ve yeni şifrenizi giriniz"
+    }
   },
   "text": {
     "settings": {

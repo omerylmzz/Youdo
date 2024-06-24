@@ -14,12 +14,14 @@ const styles = StyleSheet.create({
   },
   body:{
     paddingHorizontal: horizontalScale(12),
-    paddingVertical: verticalScale(12)
+    paddingBottom: verticalScale(24)
   },
   title:{
-    fontWeight: "bold",
-    fontSize: moderateScale(20)
+    fontSize: moderateScale(24)
   },
+  description:{
+    fontSize: moderateScale(16)
+  }
 })
 
 export default styles;

@@ -31,9 +31,9 @@ const ServerErrorsData = [
     en: "Password must have a minimum of 6 characters"
   },
   {
-    message: '"PASSWORD" length must be less than or equal to 30 characters long',
-    tr: "Şifre 30 ya da daha az karakterden oluşmalı",
-    en: "Password must be 30 characters or less"
+    message: '"PASSWORD" length must be less than or equal to 24 characters long',
+    tr: "Şifre 24 ya da daha az karakterden oluşmalı",
+    en: "Password must be 24 characters or less"
   },
   {
     message: "There is no user with this e-mail address",
@@ -104,6 +104,61 @@ const ServerErrorsData = [
     message: "Incorrect token value",
     tr: "Hatalı anahtar değeri",
     en: "Incorrect token value"
+  },
+  {
+    message: '"CURRENT_PASSWORD" is not allowed to be empty',
+    tr: "Şu anki şifre boş bırakılamaz",
+    en: "Current password cannot be left blank"
+  },
+  {
+    message: '"CURRENT_PASSWORD" length must be at least 6 characters long',
+    tr: "Şu anki şifre en az 6 karakterden oluşmalı",
+    en: "Current password must have a minimum of 6 characters"
+  },
+  {
+    message: '"CURRENT_PASSWORD" length must be less than or equal to 24 characters long',
+    tr: "Şu anki şifre 24 ya da daha az karakterden oluşmalı",
+    en: "Current password must be 24 characters or less"
+  },
+  {
+    message: '"NEW_PASSWORD" is not allowed to be empty',
+    tr: "Yeni şifre boş bırakılamaz",
+    en: "New password cannot be left blank"
+  },
+  {
+    message: '"NEW_PASSWORD" length must be at least 6 characters long',
+    tr: "Yeni şifre en az 6 karakterden oluşmalı",
+    en: "New password must have a minimum of 6 characters"
+  },
+  {
+    message: '"NEW_PASSWORD" length must be less than or equal to 24 characters long',
+    tr: "Yeni şifre 24 ya da daha az karakterden oluşmalı",
+    en: "New password must be 24 characters or less"
+  },
+  {
+    message: "Your password did not match",
+    tr: "Şifreniz eşleşmedi",
+    en: "Your password did not match"
+  },
+  {
+    message: "Password must be different from your current",
+    tr: "Yeni şifreniz şu ankinden farklı olmalı",
+    en: "Password must be different from your current"
+  },
+  {
+    message: "Failed to change password",
+    tr: "Şifre adresi değiştirilemedi",
+    en: "Failed to change password"
+  },
+  {
+    message: "E-mail address must be different from your current",
+    tr: "Yeni e-posta adresi şu ankinden farklı olmalı",
+    en: "E-mail address must be different from your current"
+  },
+  {
+    message: "Failed to change e-mail address",
+    tr: "E-posta adresi değiştirilemedi",
+    en: "Failed to change e-mail address"
   }
 ]
 

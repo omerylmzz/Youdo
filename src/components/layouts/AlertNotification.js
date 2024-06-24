@@ -29,7 +29,7 @@ const AlertNotification = forwardRef( ({type, text}, ref) => {
 
   return(
     <Animated.View style={[styles.container, animatedStyles]}>
-      <Text style={[styles.text, {color: colors.text}]}>
+      <Text style={[styles.text, {color: colors.white}]}>
         {text}
       </Text>
     </Animated.View>

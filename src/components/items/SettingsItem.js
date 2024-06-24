@@ -47,7 +47,7 @@ const SettingsItem = ({icon, image, label, link, value, type, onPress}) => {
             <View>
               <Switch
                 value={value}
-                trackColor={{true: colors.green, false: colors.secondary}}
+                trackColor={{true: colors.green, false: colors.placeholder}}
                 thumbColor={colors.white}
               />
             </View>

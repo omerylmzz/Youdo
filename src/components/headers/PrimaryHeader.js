@@ -1,10 +1,10 @@
 import React from "react";
-import { Pressable, StyleSheet, View, Text } from "react-native";
+import { Pressable, StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import { defaultWidth, horizontalScale, moderateScale, verticalScale } from "../../helper/Metrics";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useTheme } from "@react-navigation/native";
 
-const PrimaryHeader = ({mode, title, leftIcon, leftPress, rightIcon, rightPress}) => {
+const PrimaryHeader = ({mode, loading, title, leftIcon, leftPress, rightIcon, rightPress}) => {
 
   const { colors } = useTheme();
 
@@ -23,9 +23,16 @@ const PrimaryHeader = ({mode, title, leftIcon, leftPress, rightIcon, rightPress}
       {
         mode ?
           <View style={styles.button}>
-            <Pressable style={{padding: moderateScale(4)}} onPress={rightPress} android_ripple={{color: colors.ripple}}>
-              <Icon name={rightIcon} color={colors.icon} size={moderateScale(24)}/>
-            </Pressable>
+            {
+              loading ?
+                <View style={{paddingHorizontal: horizontalScale(6)}}>
+                  <ActivityIndicator size="small" color={colors.icon} animating={loading}/>
+                </View>
+                :
+                <Pressable style={{padding: moderateScale(4)}} onPress={rightPress} android_ripple={{color: colors.ripple}}>
+                  <Icon name={rightIcon} color={colors.icon} size={moderateScale(24)}/>
+                </Pressable>
+            }
           </View>
           :
           <View style={{paddingHorizontal: horizontalScale(8)}}/>
