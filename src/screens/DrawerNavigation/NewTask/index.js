@@ -18,25 +18,27 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
 
 const NewTask = ({navigation}) => {
-
-  const ref = useRef(null);
-
-  const selector = useSelector((state) => state.colorCategory);
-  const dispatch = useDispatch();
-
+  // Theme Variable
   const { colors } = useTheme();
-
+  // Language Variable
   const {t} = useTranslation();
-
+  // Redux Variables
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state.colorCategory);
+  // Input States
   const [title, setTitle] = useState("");
   const [task, setTask] = useState("");
   const [date, setDate] = useState({string: "", iso: ""});
   const [time, setTime] = useState({string: "", iso: ""});
+  // Reminder State
   const [reminder, setReminder] = useState(false);
+  // Modal States
   const [modeDatePicker, setModeDatePicker] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  // State that controls the loading of the button
+  const [isLoading, setIsLoading] = useState(false);
+  // Alert Notification Ref
+  const alertNotificationRef = useRef(null);
   const [alertNotification, setAlertNotification] = useState({
     type: "",
     text: ""
@@ -73,7 +75,7 @@ const NewTask = ({navigation}) => {
   }
 
   const createTask = useCallback(() => {
-    setLoading(true);
+    setIsLoading(true);
     setTimeout(async () => {
       try {
 
@@ -97,7 +99,7 @@ const NewTask = ({navigation}) => {
         const response = await client.post("/task/create", data, { headers });
 
         if(response.data.SUCCESSFUL) {
-          setLoading(false);
+          setIsLoading(false);
           setTitle("");
           setTask("");
           setDate({string: "", iso: ""});
@@ -105,20 +107,20 @@ const NewTask = ({navigation}) => {
           setReminder(false);
           dispatch(selectColor({id: "0", color: "#E72929"}));
           setAlertNotification({type: "success", text: LANGUAGE === "English" ? response.data.MESSAGE : "Görev başarılı bir şekilde oluşturuldu"});
-          ref?.current?.showAlertNotification();
+          alertNotificationRef?.current?.showAlertNotification();
         }
         else {
-          setLoading(false);
+          setIsLoading(false);
           const Index = serverErrorsData.findIndex((item) => item.message === response.data.MESSAGE);
           setAlertNotification({type: "error", text: LANGUAGE === "English" ? serverErrorsData[Index].en : serverErrorsData[Index].tr});
-          ref?.current?.showAlertNotification();
+          alertNotificationRef?.current?.showAlertNotification();
         }
       }
       catch(error) {
-        setLoading(false);
+        setIsLoading(false);
         console.log("NEW TASK ERROR: " + error);
         setAlertNotification({type: "error", text: "Something went wrong"});
-        ref?.current?.showAlertNotification();
+        alertNotificationRef?.current?.showAlertNotification();
       }
     }, 2000);
   })
@@ -198,8 +200,8 @@ const NewTask = ({navigation}) => {
           mode={true}
           text={t("button.create")}
           onPress={createTask}
-          loading={loading}
-          disable={loading}/>
+          loading={isLoading}
+          disable={isLoading}/>
       </View>
       <DateTimePickerModal
         mode={modeDatePicker}
@@ -208,7 +210,7 @@ const NewTask = ({navigation}) => {
         onConfirm={handlePicker}
         onCancel={hidePicker}/>
       <AlertNotification
-        ref={ref}
+        ref={alertNotificationRef}
         type={alertNotification.type}
         text={alertNotification.text}/>
     </SafeAreaView>

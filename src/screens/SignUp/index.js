@@ -15,22 +15,25 @@ import { ThemeContext } from "../../theme/ThemeContext";
 import { useTheme } from "@react-navigation/native";
 
 const SignUp = ({navigation}) => {
-
-  const animationRef = useRef(null);
-  const alertNotificationRef = useRef(null);
-  const [loading, setLoading] = useState(false);
-  const [secureText, setSecureText] = useState(true);
-
+  // Theme Variables
   const { isDarkTheme } = useContext(ThemeContext);
   const { colors } = useTheme();
-
+  //Language Variable
   const {t} = useTranslation();
-
+  // Lottie Ref
+  const animationRef = useRef(null);
+  // Alert Notification Ref
+  const alertNotificationRef = useRef(null);
+  // Alert Notification State
   const [alertNotification, setAlertNotification] = useState({
-    type: "",
-    text: ""
+      type: "",
+      text: ""
   });
-
+  // State that controls the loading of the button
+  const [loading, setLoading] = useState(false);
+  // State that controls the password input
+  const [secureText, setSecureText] = useState(true);
+  // Redux Hook Form Variables
   const {
     control,
     handleSubmit,

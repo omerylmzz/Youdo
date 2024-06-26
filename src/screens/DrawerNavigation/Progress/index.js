@@ -12,21 +12,24 @@ import AlertNotification from "../../../components/layouts/AlertNotification";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
 const Progress = ({navigation}) => {
-
+  // Theme Variable
+  const { colors } = useTheme();
+  // Language Variable
+  const {t} = useTranslation();
+  // Redux Variables
+  const dispatch = useDispatch();
+  const taskSelector = useSelector((state) => state.dailyTasks);
+  // Name State
   const [name, setName] = useState("");
+  // Refresh Control State
   const [refreshing, setRefreshing] = useState(false);
-  const ref = useRef(null);
+  // Alert Notification Ref
+  const alertNotificationRef = useRef(null);
+  // Alert Notification State
   const [alertNotification, setAlertNotification] = useState({
     type: "",
     text: ""
   });
-
-  const { colors } = useTheme();
-
-  const {t} = useTranslation();
-
-  const dispatch = useDispatch();
-  const taskSelector = useSelector((state) => state.dailyTasks);
 
   useEffect(() => {
     getUserData();
@@ -71,13 +74,13 @@ const Progress = ({navigation}) => {
       }
       else {
         setAlertNotification({type: "error", text: LANGUAGE === "English" ? "Something went wrong" : "Bir şeyler ters gitti"});
-        ref?.current?.showAlertNotification();
+        alertNotificationRef?.current?.showAlertNotification();
       }
     }
     catch (error){
       console.log("UPDATE TASK ERROR: " + error);
       setAlertNotification({type: "error", text: "Something went wrong"});
-      ref?.current?.showAlertNotification();
+      alertNotificationRef?.current?.showAlertNotification();
     }
   })
 
@@ -144,7 +147,7 @@ const Progress = ({navigation}) => {
         }
       </ScrollView>
       <AlertNotification
-        ref={ref}
+        ref={alertNotificationRef}
         type={alertNotification.type}
         text={alertNotification.text}/>
     </View>

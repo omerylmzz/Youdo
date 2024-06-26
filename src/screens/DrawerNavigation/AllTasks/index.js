@@ -28,27 +28,25 @@ import { useTheme } from "@react-navigation/native";
 import { ThemeContext } from "../../../theme/ThemeContext";
 
 const AllTasks = ({navigation}) => {
-
-  // Redux Definitions
+  // Theme Variables
+  const { isDarkTheme } = useContext(ThemeContext);
+  const { colors } = useTheme();
+  // Language Variable
+  const {t} = useTranslation();
+  // Redux Variables
   const dispatch = useDispatch();
   const calendarSelector = useSelector((state) => state.calendar);
   const taskSelector = useSelector((state) => state.allTasks);
-
-  const { isDarkTheme } = useContext(ThemeContext);
-  const { colors } = useTheme();
-
-  const {t} = useTranslation();
+  // Alert Notification Variables
   const alertNotificationRef = useRef(null);
   const [alertNotification, setAlertNotification] = useState({
     type: "",
     text: ""
   });
-
   // Refresh State
   const [refreshing, setRefreshing] = useState(false);
   // Modal State
   const [modal, setModal] = useState({status: false, data: {}});
-
   // Variable that returns selected day
   const selectedDay = `${calendarSelector.selectedDate.day} ${calendarSelector.selectedDate.month} ${calendarSelector.selectedDate.year}`;
 

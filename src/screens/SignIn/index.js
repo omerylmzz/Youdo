@@ -13,21 +13,23 @@ import { ThemeContext } from "../../theme/ThemeContext";
 import { useTheme } from "@react-navigation/native";
 
 const SignIn = ({navigation}) => {
-
-  const ref = useRef(null);
-  const [loading, setLoading] = useState(false);
-  const [secureText, setSecureText] = useState(true);
-
+  //Theme Variables
   const { isDarkTheme } = useContext(ThemeContext);
   const {colors} = useTheme();
-
+  // Language Variable
   const { t } = useTranslation();
-
+  // Alert Notification Ref
+  const alertNotificationRef = useRef(null);
+  // Alert Notification State
   const [alertNotification, setAlertNotification] = useState({
     type: "",
     text: ""
   });
-
+  // State that controls the loading of the button
+  const [isLoading, setIsLoading] = useState(false);
+  // State that controls the password input
+  const [secureText, setSecureText] = useState(true);
+  // Redux Hook Form Variables
   const {
     control,
     handleSubmit,
@@ -39,7 +41,7 @@ const SignIn = ({navigation}) => {
   });
 
   const handleSignIn = useCallback((data) => {
-    setLoading(true);
+    setIsLoading(true);
     setTimeout(async () => {
       try {
         const response = await client.post("/user/signin", {
@@ -48,7 +50,7 @@ const SignIn = ({navigation}) => {
         });
 
         if (response.data.SUCCESSFUL){
-          setLoading(false);
+          setIsLoading(false);
           try {
             await AsyncStorage.setItem("ACCESS_TOKEN", response.data.ACCESS_TOKEN);
             await AsyncStorage.setItem("USER_DATA", JSON.stringify(response.data.DATA));
@@ -60,18 +62,18 @@ const SignIn = ({navigation}) => {
           }
         }
         else {
-          setLoading(false);
+          setIsLoading(false);
           const Index = serverErrorsData.findIndex((item) => item.message === response.data.MESSAGE);
           const LANGUAGE = await AsyncStorage.getItem("LANGUAGE");
           setAlertNotification({type: "error", text: LANGUAGE === "English" ? serverErrorsData[Index].en : serverErrorsData[Index].tr});
-          ref?.current?.showAlertNotification();
+          alertNotificationRef?.current?.showAlertNotification();
         }
       }
       catch (error){
-        setLoading(false);
+        setIsLoading(false);
         console.log("SIGN IN ERROR: " + error);
         setAlertNotification({type: "error", text: "Something went wrong"});
-        ref?.current?.showAlertNotification();
+        alertNotificationRef?.current?.showAlertNotification();
       }
     }, 2000);
   })
@@ -124,9 +126,8 @@ const SignIn = ({navigation}) => {
             mode={true}
             text={t("button.sign-in")}
             onPress={handleSubmit(handleSignIn)}
-            loading={loading}
-            disable={loading}
-          />
+            loading={isLoading}
+            disable={isLoading}/>
           <PrimaryButton
             mode={false}
             text={t("button.sign-up")}
@@ -134,7 +135,7 @@ const SignIn = ({navigation}) => {
         </View>
       </ScrollView>
       <AlertNotification
-        ref={ref}
+        ref={alertNotificationRef}
         type={alertNotification.type}
         text={alertNotification.text}/>
     </SafeAreaView>

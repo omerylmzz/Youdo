@@ -7,11 +7,12 @@ import { useTheme } from "@react-navigation/native";
 import { ThemeContext } from "../../theme/ThemeContext";
 
 const Splash = ({navigation}) => {
-
+  // Theme Variables
   const { setIsDarkTheme } = useContext(ThemeContext);
   const { colors } = useTheme();
 
   useEffect(() => {
+    // User and device control functions
     checkDeviceSettings();
     checkUser();
   }, []);

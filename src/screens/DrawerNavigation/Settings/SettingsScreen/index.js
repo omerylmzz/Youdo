@@ -8,11 +8,12 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@react-navigation/native";
 
 const SettingsScreen = ({navigation}) => {
-
-  const [userData, setUserData] = useState({});
-  const { t } = useTranslation();
-
+  // Theme Variable
   const { colors } = useTheme();
+  // Language Variable
+  const { t } = useTranslation();
+  // User Data State
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     getUserData();
@@ -138,7 +139,7 @@ const SettingsScreen = ({navigation}) => {
                   link={link}
                   value={value}
                   type={type}
-                  onPress={() => id === "notification" ? changeNotificationSetting() : navigation.navigate("ChangeSettingsScreen", {
+                  onPress={() => id === "notification" ? changeNotificationSetting() : id === "personal" ? console.log("Personal") : navigation.navigate("ChangeSettingsScreen", {
                     TYPE: id,
                     MAIL: userData.MAIL
                   })}

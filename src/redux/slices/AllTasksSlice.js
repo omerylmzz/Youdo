@@ -24,7 +24,6 @@ const CalendarSlice = createSlice({
       // Gives the number of days in the current month
       const daysOfMonth = moment(moment()).daysInMonth(); // output: 30
       const max = daysOfMonth - today === 0 ? 4 : daysOfMonth - today === 1 ? 3 : 2; // output: 4 || 3 || 2
-
       // Returns previous days in object
       for (let i = 1; i <= max; i++){
         const previousDays = {

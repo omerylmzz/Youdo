@@ -16,26 +16,29 @@ import client from "../../../../api/client";
 import serverErrorsData from "../../../../data/ServerErrorsData";
 
 const ChangeSettingsScreen = ({navigation, route}) => {
-
+  // Parameters from previous screen
   const { TYPE, MAIL } = route.params;
-  const { t } = useTranslation();
-  const [themes, setThemes] = useState([]);
-  const [languages, setLanguages] = useState([]);
-
+  // Theme Variables
   const { setIsDarkTheme } = useContext(ThemeContext);
   const { colors } = useTheme();
-
+  // Language Variable
+  const { t } = useTranslation();
+  // Theme and Language States
+  const [themes, setThemes] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  // State that controls the loading of the button
   const [isLoading, setIsLoading] = useState(false);
-
+  // State that controls the password inputs
   const [secureCurrentPassword, setSecureCurrentPassword] = useState(true);
   const [secureNewPassword, setSecureNewPassword] = useState(true);
-
+  // Alert Notification Ref
   const alertNotificationRef = useRef(null);
+  // Alert Notification State
   const [alertNotification, setAlertNotification] = useState({
     type: "",
     text: ""
   });
-
+  // React Hook Form Variables
   const {
     control,
     handleSubmit,
@@ -46,8 +49,6 @@ const ChangeSettingsScreen = ({navigation, route}) => {
       newPassword: ""
     },
   });
-
-
 
   useEffect(() => {
     getData();
@@ -96,7 +97,6 @@ const ChangeSettingsScreen = ({navigation, route}) => {
 
 
   const selectItem = async (item) => {
-
     if (TYPE === "theme"){
       const Index = themes.findIndex((i) => i.id === item.id);
       await AsyncStorage.setItem("THEME", themes[Index].id);
@@ -105,11 +105,9 @@ const ChangeSettingsScreen = ({navigation, route}) => {
       const Index = languages.findIndex((i) => i.id === item.id);
       await AsyncStorage.setItem("LANGUAGE", languages[Index].id);
     }
-
   }
 
   const saveChanges = useCallback (async (data) => {
-
     if (TYPE === "mail"){
       setIsLoading(true);
       setTimeout(async () => {
@@ -249,10 +247,6 @@ const ChangeSettingsScreen = ({navigation, route}) => {
       setLanguages(data);
     }
   }
-
-
-
-
 
   return(
     <View style={[styles.container, {backgroundColor: colors.background}]}>
