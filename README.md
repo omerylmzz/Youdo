@@ -15,7 +15,7 @@ A simple to-do application using React Native and Node.js. The app supports addi
 ## Features
 
 - Light and dark theme.
-- Adding custom color to tasks.
+- Custom color for tasks.
 - [Axios](https://axios-http.com) to making it easier to make HTTP requests in JavaScript applications.
 - [React Redux](https://react-redux.js.org) to state mangement.
 - [React Hook Form](https://react-hook-form.com) to simplify form management.
