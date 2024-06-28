@@ -2,7 +2,7 @@
 
 ![Logo](https://i.hizliresim.com/q620jxp.jpg)
 
-A simple to-do application using React Native and Node.js. The app supports adding, updating, and deleting tasks. This application has been developed and tested only in the Android environment.
+A simple todo application using React Native, Node.js, and MongoDB is designed to help users keep track of their daily tasks. With a user-friendly interface and a robust back-end structure, you can easily add, update, and delete your tasks. The application features basic functionalities such as adding new tasks, updating existing tasks, and deleting unnecessary tasks. React Native provides a flexible and high-performance user interface for mobile devices, while Node.js ensures fast and efficient server-side operations. MongoDB offers flexible and scalable database management. This application has been developed and tested only in the Android environment.
 
 ## Used Technologies 
 
@@ -14,8 +14,15 @@ A simple to-do application using React Native and Node.js. The app supports addi
 
 ## Features
 
-- Light and dark theme.
+- User login registration.
+- Add, update and delete tasks.
 - Custom color for tasks.
+- Daily and monthly task tracking.
+- Light and dark theme.
+- Turkish and English language support.
+
+## Libraries
+
 - [Axios](https://axios-http.com) to making it easier to make HTTP requests in JavaScript applications.
 - [React Redux](https://react-redux.js.org) to state mangement.
 - [React Hook Form](https://react-hook-form.com) to simplify form management.
@@ -36,7 +43,7 @@ Clone this repository
 git clone https://github.com/omerylmzz/Youdo.git
 ```
 
-Install dependencies
+Install the dependencies
 
 ```bash
 npm install
