@@ -1,6 +1,7 @@
 # Youdo
 
-![Logo](https://i.hizliresim.com/q620jxp.jpg)
+![Image](https://github.com/user-attachments/assets/18ebcf95-9cee-4854-a1d6-fe306808647f)
+
 
 A simple todo application using React Native, Node.js, and MongoDB is designed to help users keep track of their daily tasks. With a user-friendly interface and a robust back-end structure, you can easily add, update, and delete your tasks. The application features basic functionalities such as adding new tasks, updating existing tasks, and deleting unnecessary tasks. React Native provides a flexible and high-performance user interface for mobile devices, while Node.js ensures fast and efficient server-side operations. MongoDB offers flexible and scalable database management. This application has been developed and tested only in the Android environment.
 
